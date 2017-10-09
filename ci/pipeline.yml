@@ -74,11 +74,11 @@ jobs:
       trigger: true
     - put: docker_hub_dev
       params:
-        path: website_sources_dev/
+        build: website_sources_dev/
       on_failure:
         do:
         - task: hue_red
-          file: website_sources/ci/tasks/hue_red.yml
+          file: website_sources_dev/ci/tasks/hue_red.yml
         - put: slack_msg
           params:
             channel: '#general'
@@ -88,7 +88,7 @@ jobs:
       on_success:
         do:
         - task: hue_green
-          file: website_sources/ci/tasks/hue_green.yml
+          file: website_sources_dev/ci/tasks/hue_green.yml
         - put: slack_msg
           params:
             channel: '#general'
@@ -99,8 +99,9 @@ jobs:
     public: true
     plan:
     - get: website_sources_dev
-      passed:
-      - build-website-dev
+      passed: [ build-website-dev ]
+    - get: version
+      trigger: false
     - put: website_sources
       params:
         merge: true
@@ -125,12 +126,11 @@ jobs:
     serial: true
     plan:
     - get: website_sources
-      passed:
-      - merge-dev-to-master
+      passed: [ merge-dev-to-master ]
       trigger: true
     - put: docker_hub
       params:
-        path: website_sources/
+        build: website_sources/
       on_failure:
         do:
         - task: hue_red
@@ -158,8 +158,7 @@ jobs:
     plan:
     - get: version
     - get: website_sources
-      passed:
-      - build-website
+      passed: [ build-website ]
       trigger: true
     - task: create-artifact
       file: website_sources/ci/tasks/create_artifact.yml
@@ -180,13 +179,13 @@ jobs:
           channel: '#general'
           text: |
             Personal website: Artifact succesfully uploaded to S3 target.
+
   - name: bump-version-minor
     public: true
     plan:
     - aggregate:
       - get: website_sources
-        passed:
-        - ecs-backup
+        passed: [ ecs-backup ]
         trigger: true
       - get: version
       - put: version
