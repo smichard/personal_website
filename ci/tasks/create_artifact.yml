@@ -5,7 +5,7 @@ image_resource:
   source:
     repository: ubuntu
 inputs:
-- name: website_sources
+- name: app_sources
 - name: version
 outputs:
 - name: artifact
