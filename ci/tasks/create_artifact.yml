@@ -18,5 +18,5 @@ run:
     export CURRENT_TIMESTAMP=$(date +"%Y%m%d%H%S")
     export CURRENT_VERSION=$(cat version/version)
     # Creating sample package file with a file name containing the new version number
-    tar -zcvf personal_website-$CURRENT_TIMESTAMP-$CURRENT_VERSION.tar.gz website_sources
+    tar -zcvf personal_website-$CURRENT_TIMESTAMP-$CURRENT_VERSION.tar.gz app_sources
     cp personal_website-$CURRENT_TIMESTAMP-$CURRENT_VERSION.tar.gz artifact
