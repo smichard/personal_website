@@ -73,7 +73,7 @@ jobs:
         params:
           channel: '#general'
           text: |
-            Prod: New personal_website container pusher to docker hub The build $BUILD_JOB_NAME with build ID $BUILD_ID for pipeline $BUILD_PIPELINE_NAME completed succesfully. Check the current development state at:
+            Prod: New personal_website container pushed to docker hub The build $BUILD_JOB_NAME with build ID $BUILD_ID for pipeline $BUILD_PIPELINE_NAME completed succesfully. Check the current development state at:
             https://deploy.michard.de/teams/main/pipelines/personal_website
       on_failure:
         put: slack_msg
